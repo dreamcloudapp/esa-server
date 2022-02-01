@@ -15,6 +15,6 @@ public class DocumentSimilarityScorer {
     public DocumentScore score(DocumentSimilarityRequestBody request) throws Exception {
         DocumentSimilarity similarity = new DocumentSimilarity(vectorizer);
         SimilarityInfo similarityInfo = similarity.score(request.documentText1, request.documentText2, true);
-        return new DocumentScore("success", similarityInfo.score, similarityInfo.topConcepts);
+        return new DocumentScore("success", similarityInfo.getScore(), similarityInfo.getTopConcepts());
     }
 }
