@@ -17,11 +17,16 @@ public class DocumentSimilarityScorer {
 
     public DocumentScore score(DocumentSimilarityRequestBody request) throws Exception {
         DocumentSimilarity similarity = new DocumentSimilarity(vectorizer);
-        SimilarityInfo similarityInfo = similarity.score(request.documentText1, request.documentText2, true);
-        ArrayList<String> parsedTopConcepts = new ArrayList<>();
-        for(String topConcept: similarityInfo.getTopConcepts()) {
-            parsedTopConcepts.add(DocumentNameResolver.getTitle(Integer.parseInt(topConcept)));
+        try {
+            SimilarityInfo similarityInfo = similarity.score(request.documentText1, request.documentText2, true);
+            ArrayList<String> parsedTopConcepts = new ArrayList<>();
+            for(String topConcept: similarityInfo.getTopConcepts()) {
+                parsedTopConcepts.add(DocumentNameResolver.getTitle(Integer.parseInt(topConcept)));
+            }
+            return new DocumentScore("success", similarityInfo.getScore(), parsedTopConcepts.toArray(new String[0]));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new DocumentScore("failure", e.getMessage());
         }
-        return new DocumentScore("success", similarityInfo.getScore(), parsedTopConcepts);
     }
 }

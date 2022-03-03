@@ -19,6 +19,8 @@ import org.apache.commons.cli.*;
 import org.apache.lucene.analysis.Tokenizer;
 import org.apache.lucene.analysis.standard.StandardTokenizer;
 
+import java.util.concurrent.TimeUnit;
+
 public class Main {
     public static void main(String[] args) {
         Options options = new Options();
@@ -44,6 +46,15 @@ public class Main {
         try {
             CommandLine cli = parser.parse(options, args);
             int port = Integer.parseInt(cli.getOptionValue("port"));
+
+            System.out.print("\nSetting up server on port " + port);
+            TimeUnit.MILLISECONDS.sleep(500);
+            System.out.print('.');
+            TimeUnit.MILLISECONDS.sleep(500);
+            System.out.print('.');
+            TimeUnit.MILLISECONDS.sleep(500);
+            System.out.println('.');
+            TimeUnit.MILLISECONDS.sleep(500);
 
             VectorizationOptions vectorOptions = vectorizationOptionsReader.getOptions(cli);
             AnalyzerOptions analyzerOptions = analyzerOptionsReader.getOptions(cli);
